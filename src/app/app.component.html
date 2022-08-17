@@ -1,0 +1,56 @@
+<div id="wrapper">
+<div id="title">
+  <div class="centerflex">
+    <img id="title-logo" src="assets/logo-64x64.png" width="32px" height="32px">
+    <span id="title-text">GPF: Genotypes and Phenotypes in Families</span>
+  </div>
+
+  <div *ngIf="(userInfo$ | async)?.email as email; else loggedOut" class="centerflex">
+    {{ email }}
+    <button class="btn btn-sm" (click)="logout()">Logout</button>
+  </div>
+  <ng-template #loggedOut>
+    <button id="login-button" class="btn btn-secondary" (click)="login()">Login</button>
+  </ng-template>
+</div>
+
+<div id="instances-container">
+<ng-container *ngFor="let instance of ['hg38', 'hg19']">
+  <table *ngIf="content">
+    <thead>
+      <tr>
+        <th class="big-title top-header" colspan="2">
+          <a [attr.href]="instance === 'hg38' ? hg38Link : hg19Link" target="_blank">{{instance === 'hg38' ? hg38Link : hg19Link}}</a> instance
+        </th>
+      </tr>
+      <tr>
+        <th scope="col" class="big-title" style="font-size: 16px; font-weight: bold;">Dataset</th>
+        <th scope="col" class="big-title" style="font-size: 16px; font-weight: bold;">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngTemplateOutlet="datasets; context: { entries: content.data, nesting: 0, instance: instance}"></ng-container>
+    </tbody>
+  </table>
+</ng-container>
+</div>
+
+<ng-template #datasets let-entries="entries" let-nesting="nesting" let-instance="instance">
+  <ng-container *ngFor="let entry of entries">
+    <tr>
+      <td [ngStyle]="{'padding-left': (nesting * 50 || 5) + 'px'}">
+        <h5><a [attr.href]="constructLink(instance, entry.dataset)" target="_blank">{{entry.displayName}}</a></h5>
+        <div> {{ entry.description }} </div>
+      </td>
+      <td class="access-td">
+        <i [ngClass]="{'fa': true, 'fa-lock': !entry.access_rights, 'fa-unlock': entry.access_rights}" aria-hidden="true"></i>
+      </td>
+    </tr>
+    <ng-container *ngIf="entry.children">
+      <ng-container *ngTemplateOutlet="datasets; context: { entries: entry.children, nesting: nesting + 1, instance: instance }"></ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<span id="user-documentation-link"><a href="https://www.iossifovlab.com/gpfuserdocs/" target="_blank">User documentation</a></span>
+</div>
