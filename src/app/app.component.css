@@ -84,3 +84,11 @@ table, th, td {
   justify-content: space-between;
   column-gap: 15px;
 }
+
+.fa-lock {
+  color: #c22727;
+}
+
+.fa-unlock {
+  color: #3ea658;
+}
