@@ -44,7 +44,7 @@ a:hover {
 }
 
 td {
-  padding: 5px;
+  padding: 8px;
 }
 
 table, th, td {
@@ -64,7 +64,7 @@ table, th, td {
   color: inherit;
   font-size: 24px;
   vertical-align: middle;
-  padding: 10px 5px 10px 5px;
+  padding: 10px 8px 10px 8px;
 }
 
 .top-header {

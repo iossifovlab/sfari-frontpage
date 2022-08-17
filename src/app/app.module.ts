@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { AppComponent } from './app.component';
 
@@ -26,6 +27,7 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
+    MarkdownModule.forRoot(),
   ],
   providers: [
     AuthService,

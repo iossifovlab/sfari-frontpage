@@ -59,6 +59,11 @@ export class AppComponent implements OnInit {
 
     this.dataService.getDatasetDescription(
       `${environment.hg38Path}/${environment.apiSuffix}`, entry['dataset']
-    ).pipe(take(1)).subscribe(res => { entry['description'] = res['description']; });
+    ).pipe(take(1)).subscribe(res => {
+      if (res['description'] === null) {
+        return;
+      }
+      entry['description'] = res['description'].substring(res['description'].indexOf('\n\n') + 1);
+    });
   }
 }

@@ -40,9 +40,11 @@
     <ng-template #datasets let-entries="entries" let-nesting="nesting" let-instance="instance">
       <ng-container *ngFor="let entry of entries">
         <tr>
-          <td [ngStyle]="{'padding-left': (nesting * 50 || 5) + 'px'}">
-            <h5><a [attr.href]="constructLink(instance, entry.dataset)" target="_blank">{{entry.dataset}}</a></h5>
-            <div> {{ entry.description }} </div>
+          <td [ngStyle]="{'padding-left': (nesting * 60 || 8) + 'px'}">
+            <h4 [style.margin-bottom]="entry.description ? '8px' : '0'">
+              <a [attr.href]="constructLink(instance, entry.dataset)" target="_blank">{{entry.dataset}}</a>
+            </h4>
+            <markdown [data]="entry.description"></markdown>
           </td>
           <td class="access-td">
             <i
