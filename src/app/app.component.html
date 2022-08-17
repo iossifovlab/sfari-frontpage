@@ -39,7 +39,7 @@
   <ng-container *ngFor="let entry of entries">
     <tr>
       <td [ngStyle]="{'padding-left': (nesting * 50 || 5) + 'px'}">
-        <h5><a [attr.href]="constructLink(instance, entry.dataset)" target="_blank">{{entry.displayName}}</a></h5>
+        <h5><a [attr.href]="constructLink(instance, entry.dataset)" target="_blank">{{entry.dataset}}</a></h5>
         <div> {{ entry.description }} </div>
       </td>
       <td class="access-td">
