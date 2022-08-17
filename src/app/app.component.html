@@ -14,51 +14,53 @@
     </ng-template>
   </div>
 
-  <ng-container *ngFor="let instance of ['hg38', 'hg19']">
-    <table *ngIf="content">
-      <thead>
-        <tr>
-          <th class="big-title top-header" colspan="2">
-            <span><a [attr.href]="instance === 'hg38' ? hg38Link : hg19Link" target="_blank"
-              >{{instance === 'hg38' ? hg38Link : hg19Link}}</a> instance</span
-            >
-          </th>
-        </tr>
-        <tr>
-          <th scope="col" class="big-title" style="font-size: 16px; font-weight: bold">Dataset</th>
-          <th scope="col" class="big-title" style="font-size: 16px; font-weight: bold">Access</th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container *ngTemplateOutlet="datasets; context: { entries: content.data, nesting: 0, instance: instance}">
-        </ng-container>
-      </tbody>
-    </table>
-  </ng-container>
+  <div id="tables">
+    <ng-container *ngFor="let instance of ['hg38', 'hg19']">
+      <table *ngIf="content">
+        <thead>
+          <tr>
+            <th class="big-title top-header" colspan="2">
+              <span><a [attr.href]="instance === 'hg38' ? hg38Link : hg19Link" target="_blank"
+                >{{instance === 'hg38' ? hg38Link : hg19Link}}</a> instance</span
+              >
+            </th>
+          </tr>
+          <tr>
+            <th scope="col" class="big-title" style="font-size: 16px; font-weight: bold">Dataset</th>
+            <th scope="col" class="big-title" style="font-size: 16px; font-weight: bold">Access</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngTemplateOutlet="datasets; context: { entries: content.data, nesting: 0, instance: instance}">
+          </ng-container>
+        </tbody>
+      </table>
+    </ng-container>
 
-  <ng-template #datasets let-entries="entries" let-nesting="nesting" let-instance="instance">
-    <ng-container *ngFor="let entry of entries">
-      <tr>
-        <td [ngStyle]="{'padding-left': (nesting * 50 || 5) + 'px'}">
-          <h5><a [attr.href]="constructLink(instance, entry.dataset)" target="_blank">{{entry.dataset}}</a></h5>
-          <div> {{ entry.description }} </div>
-        </td>
-        <td class="access-td">
-          <i
-            [ngClass]="{'fa': true, 'fa-lock': !entry.access_rights, 'fa-unlock': entry.access_rights}"
-            aria-hidden="true">
-          </i>
-        </td>
-      </tr>
-      <ng-container *ngIf="entry.children">
-        <ng-container
-          *ngTemplateOutlet="datasets; context: { entries: entry.children, nesting: nesting + 1, instance: instance }">
+    <ng-template #datasets let-entries="entries" let-nesting="nesting" let-instance="instance">
+      <ng-container *ngFor="let entry of entries">
+        <tr>
+          <td [ngStyle]="{'padding-left': (nesting * 50 || 5) + 'px'}">
+            <h5><a [attr.href]="constructLink(instance, entry.dataset)" target="_blank">{{entry.dataset}}</a></h5>
+            <div> {{ entry.description }} </div>
+          </td>
+          <td class="access-td">
+            <i
+              [ngClass]="{'fa': true, 'fa-lock': !entry.access_rights, 'fa-unlock': entry.access_rights}"
+              aria-hidden="true">
+            </i>
+          </td>
+        </tr>
+        <ng-container *ngIf="entry.children">
+          <ng-container
+            *ngTemplateOutlet="datasets; context: { entries: entry.children, nesting: nesting + 1, instance: instance }">
+          </ng-container>
         </ng-container>
       </ng-container>
-    </ng-container>
-  </ng-template>
+    </ng-template>
 
-  <span id="user-documentation-link">
-    <a href="https://www.iossifovlab.com/gpfuserdocs/" target="_blank">User documentation</a>
-  </span>
+    <div id="documentation-link">
+      <a href="https://www.iossifovlab.com/gpfuserdocs/" target="_blank">User documentation</a>
+    </div>
+  </div>
 </div>
