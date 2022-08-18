@@ -42,7 +42,7 @@
         <tr>
           <td [ngStyle]="{'padding-left': (nesting * 60 || 8) + 'px'}">
             <h4 [style.margin-bottom]="entry.description ? '8px' : '0'">
-              <a [attr.href]="constructLink(instance, entry.dataset)" target="_blank">{{entry.dataset}}</a>
+              <a [attr.href]="constructLink(instance, entry.dataset)" target="_blank">{{entry.name}}</a>
             </h4>
             <markdown [data]="entry.description"></markdown>
           </td>
