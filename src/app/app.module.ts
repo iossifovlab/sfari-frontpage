@@ -10,6 +10,7 @@ import { AuthService } from './auth.service';
 import { AuthResolverService } from './auth-resolver.service';
 import { AuthInterceptorService } from './auth-interceptor.service';
 import { DataService } from './data.service';
+import { InstanceComponent } from './instance/instance.component';
 
 const appRoutes: Routes = [
   {
@@ -21,7 +22,8 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    InstanceComponent
   ],
   imports: [
     BrowserModule,

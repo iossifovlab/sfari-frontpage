@@ -12,11 +12,6 @@ import { AuthService } from 'src/app/auth.service';
   providedIn: 'root'
 })
 export class DataService {
-  private readonly datasetsUrl = 'datasets/hierarchy/';
-  private readonly descriptionUrl = 'datasets/description';
-  private readonly logoutUrl = 'users/logout';
-  private readonly userInfoUrl = 'users/get_user_info';
-
   private userInfo$ = new ReplaySubject<{}>(1);
   private lastUserInfo = null;
 
@@ -28,11 +23,11 @@ export class DataService {
   ) {}
 
   public getDatasetHierarchy(apiPath: string): Observable<object> {
-    return this.http.get(`${apiPath}/${this.datasetsUrl}`);
+    return this.http.get(`${apiPath}/datasets/hierarchy`);
   }
 
   public getDatasetDescription(apiPath: string, datasetId: string): Observable<object> {
-    return this.http.get(`${apiPath}/${this.descriptionUrl}/${datasetId}`);
+    return this.http.get(`${apiPath}/datasets/description/${datasetId}`);
   }
 
   public logout(): Observable<object> {
@@ -42,7 +37,7 @@ export class DataService {
 
     return this.authService.revokeAccessToken().pipe(
       take(1),
-      switchMap(() => { return this.http.post(`${environment.authPath}/${environment.apiSuffix}/${this.logoutUrl}`, {}, options) }),
+      switchMap(() => { return this.http.post(`${environment.authPath}/api/v3/users/logout`, {}, options) }),
       tap(() => {
         window.location.href = this.locationStrategy.getBaseHref();
       })
@@ -60,7 +55,7 @@ export class DataService {
   public getUserInfo(): Observable<any> {
     const options = { withCredentials: true };
 
-    return this.http.get(`${environment.authPath}/${environment.apiSuffix}/${this.userInfoUrl}`, options).pipe(
+    return this.http.get(`${environment.authPath}/api/v3/users/get_user_info`, options).pipe(
       map(res => res),
       tap(userInfo => {
         this.userInfo$.next(userInfo);

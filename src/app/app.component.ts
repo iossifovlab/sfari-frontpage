@@ -12,10 +12,8 @@ import { AuthService } from 'src/app/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  content = null;
+  public instances: string[] = Object.keys(environment.instances);
   public userInfo$: Observable<any>;
-  public hg38Link = environment.hg38Frontend;
-  public hg19Link = environment.hg19Frontend;
 
   constructor(
     private dataService: DataService,
@@ -27,10 +25,6 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event) => {
       // This is done in order to reload data after a login, otherwise the page content is not updated appropriately
       if (event instanceof NavigationEnd) {
-        this.dataService.getDatasetHierarchy(`${environment.hg38Path}/${environment.apiSuffix}`).subscribe((data) => {
-          data['data'].forEach((d: object) => this.attachDatasetDescription(d));
-          this.content = data;
-        });
         this.reloadUserData();
         this.userInfo$ = this.dataService.getUserInfoObservable().pipe(share());
       }
@@ -49,22 +43,5 @@ export class AppComponent implements OnInit {
 
   public logout(): void {
     this.dataService.logout().subscribe(() => this.reloadUserData());
-  }
-
-  public constructLink(instance: string, datasetId: string) {
-    return `${instance === 'hg38' ? environment.hg38Frontend : environment.hg19Frontend}/datasets/${datasetId}`;
-  }
-
-  public attachDatasetDescription(entry: object) {
-    entry['children']?.forEach((d: object) => this.attachDatasetDescription(d));
-
-    this.dataService.getDatasetDescription(
-      `${environment.hg38Path}/${environment.apiSuffix}`, entry['dataset']
-    ).pipe(take(1)).subscribe(res => {
-      if (res['description'] === null) {
-        return;
-      }
-      entry['description'] = res['description'].substring(res['description'].indexOf('\n\n') + 1);
-    });
   }
 }
