@@ -29,7 +29,7 @@ function main() {
   local generate_jenkins_init="${options["generate_jenkins_init"]}"
   local expose_ports="${options["expose_ports"]}"
 
-  libmain_init iossifovlab.sfari-frontpage sfari-frontpage
+  libmain_init iossifovlab.sfari-frontpage sfari_frontpage
   libmain_init_build_env \
     clobber:"$clobber" preset:"$preset" build_no:"$build_no" generate_jenkins_init:"$generate_jenkins_init" expose_ports:"$expose_ports" \
     iossifovlab.iossifovlab-containers
