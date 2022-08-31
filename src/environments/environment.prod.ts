@@ -2,14 +2,10 @@ export const environment = {
   production: true,
   instances: {
     hg19: {
-      apiPath: 'http://localhost:8000/api/v3',
-      frontendPath: 'http://localhost123:4200',
-    },
-    hg38: {
-      apiPath: 'http://localhost:8000/api/v3',
-      frontendPath: 'http://localhost:4200',
+      apiPath: 'http://localhost:8000/gpf_prefix',
+      frontendPath: 'http://localhost:8000/gpf_prefix',
     },
   },
-  authPath: 'http://localhost:8000',
+  authPath: 'http://localhost:8000/gpf_prefix',
   oauthClientId: 'gpfjs-frontpage'
 };
