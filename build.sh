@@ -54,7 +54,7 @@ function main() {
   build_stage "Compile production"
   {
     build_run rm -rf dist/
-    build_run npm run-script ng build -- --aot --configuration 'production'
+    build_run npm run-script ng build -- --aot --configuration 'production' --base-href ''
   }
 
   build_stage "Package production"
