@@ -1,18 +1,9 @@
+// !!
 
-export const environment = {
-  production: true,
-  oauthClientId: 'gpfjs-frontpage',
-  instances: {
-    // Must be filled by some script !
+// THE PLACEHOLDER PRODUCTION ENVIRONMENT IS PUT HERE PRE-MINIFIED
+// AS IT IS MATCHED VERBATIM WHEN REPLACING WITH THE REAL PRODICTION ENVIRONMENT
 
-    // Example:
-    //    hg19: {
-    //      apiPath: 'http://localhost:9000/gpf_prefix/api/v3',
-    //      frontendPath: 'http://localhost:9000/gpf_prefix',
-    //    },
-  },
-  authPath: ''
-  // Must be a path to a gpf instance with an oauth application
-  // Example: (the first instance in the above example)
-  // authPath: 'http://localhost:9000/gpf_prefix',
-};
+// IF YOU CHANGE ANYTHING IN THIS FILE, YOU MUST UPDATE THE CORRESPONDING SCRIPTS
+
+// !!
+export const environment = {production:!0,oauthClientId:"gpfjs-frontpage",instances:{thisPropertyAndObjectMustBeReplacedWhenInProdution:{apiPath:"mustBeReplacedWhenInProduction:http://localhost:9000/gpf_prefix/api/v3/",frontendPath:"mustBeReplacedWhenInProduction:http://localhost:9000/gpf_prefix/"}},authPath:"mustBeReplacedWhenInProduction:http://localhost:9000/gpf_prefix/"}
