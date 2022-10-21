@@ -1,0 +1,45 @@
+td {
+  padding: 8px;
+}
+
+table, th, td {
+  border: 1px solid rgb(218, 218, 218) !important;
+}
+
+
+table {
+  margin-bottom: 44px;
+}
+
+table, #documentation-link {
+  max-width: 1200px;
+}
+
+.big-title {
+  margin-bottom: .5rem;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+  font-size: 24px;
+  vertical-align: middle;
+  padding: 10px 8px 10px 8px;
+}
+
+.top-header {
+  background-color: #eeeeee;
+  height: 35px;
+}
+
+.fa-lock {
+  color: #c22727;
+}
+
+.fa-unlock {
+  color: #3ea658;
+}
+
+.access-td {
+  text-align: center;
+  padding-bottom: 1px;
+}

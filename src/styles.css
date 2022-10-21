@@ -16,3 +16,16 @@ markdown a:hover {
   color: #0645ad;
   text-decoration: underline;
 }
+
+* {
+  font-family: Roboto, FontAwesome;
+}
+
+a {
+  color: #0645ad;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
