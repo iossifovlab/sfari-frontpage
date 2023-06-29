@@ -7,10 +7,10 @@
 
     <div *ngIf="(userInfo$ | async)?.email as email; else loggedOut" class="centerflex">
       <span>{{ email }}</span>
-      <button class="btn btn-sm" (click)="logout()">Logout</button>
+      <button id="log-out-button" class="btn btn-sm" (click)="logout()">Log Out</button>
     </div>
     <ng-template #loggedOut>
-      <button id="login-button" class="btn btn-secondary" (click)="login()">Login</button>
+      <button id="log-in-button" class="btn btn-secondary" (click)="login()">Log In</button>
     </ng-template>
   </div>
 

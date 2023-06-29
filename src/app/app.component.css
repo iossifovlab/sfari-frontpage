@@ -26,8 +26,15 @@
   margin-right: 10px;
 }
 
-#login-button {
+#log-in-button {
   margin-right: -15px;
+}
+
+#log-out-button {
+  padding: 4px 8px;
+  white-space: nowrap;
+  border: 1px solid #ddd;
+  background: #fff;
 }
 
 #tables {
