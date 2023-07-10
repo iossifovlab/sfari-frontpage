@@ -57,7 +57,6 @@ export class AuthService {
       client_id: environment.oauthClientId,
       token: this._accessToken,
     }, this.options).pipe(take(1), tap(this.clearTokens));
-
   }
 
   public clearTokens(): void {

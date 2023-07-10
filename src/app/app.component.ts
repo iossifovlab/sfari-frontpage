@@ -37,8 +37,11 @@ export class AppComponent implements OnInit {
 
   public login(): void {
     const codeChallenge = this.authService.generatePKCE();
-    window.open(`${environment.authPath}/o/authorize/?response_type=code&code_challenge_method=S256&code_challenge=${codeChallenge}&scope=read&client_id=${environment.oauthClientId}`,
-                '_blank', 'popup=true,width=600,height=300');
+    window.location.href = `${environment.authPath}/o/authorize/?response_type=code`
+      + `&code_challenge_method=S256`
+      + `&code_challenge=${codeChallenge}`
+      + `&scope=read`
+      + `&client_id=${environment.oauthClientId}`;
   }
 
   public logout(): void {
