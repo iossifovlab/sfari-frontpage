@@ -14,7 +14,7 @@
     </ng-template>
   </div>
 
-  <div id="tables">
+  <div *ngIf="(userInfo$ | async)" id="tables">
     <ng-container *ngFor="let instance of instances">
       <app-instance [instance]="instance"></app-instance>
     </ng-container>

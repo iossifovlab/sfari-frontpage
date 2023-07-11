@@ -17,10 +17,6 @@ export class AuthResolverService implements Resolve<object> {
     if (route.queryParams['code']) {
       return this.authService.requestAccessToken(route.queryParams['code']);
     }
-    if (window.opener) {
-      window.opener.location.reload();
-      window.close()
-    }
     return of({});
   }
 }
