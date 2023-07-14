@@ -6,7 +6,7 @@
     </div>
 
     <div *ngIf="(userInfo$ | async)?.email as email; else loggedOut" class="centerflex">
-      <span>{{ email }}</span>
+      <span id="username-field">{{ email }}</span>
       <button id="log-out-button" class="btn btn-sm" (click)="logout()">Log Out</button>
     </div>
     <ng-template #loggedOut>
