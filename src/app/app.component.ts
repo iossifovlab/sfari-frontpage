@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterContentInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable, take, share } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DataService } from 'src/app/data.service';
 import { AuthService } from 'src/app/auth.service';
-
+import { InstanceComponent } from './instance/instance.component';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/auth.service';
 export class AppComponent implements OnInit {
   public instances: string[] = Object.keys(environment.instances);
   public userInfo$: Observable<any>;
+  @ViewChild(InstanceComponent) instanceComponent: InstanceComponent;
 
   constructor(
     private dataService: DataService,
