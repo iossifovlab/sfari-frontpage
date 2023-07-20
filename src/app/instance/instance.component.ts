@@ -47,14 +47,11 @@ export class InstanceComponent implements OnChanges {
   }
 
   public collectAllStudies(data: object): void {
-    console.log(data)
+    this.allStudies.add(data['dataset']);
     if (data['children'] && data['children'].length !== 0) {
       data['children'].forEach(dataset => {
-        this.allStudies.add(data['dataset'])
         this.collectAllStudies(dataset);
       });
-    } else {
-      this.allStudies.add(data['dataset'])
     }
   }
 
