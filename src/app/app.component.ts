@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable, take, share } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
     private dataService: DataService,
     private authService: AuthService,
     private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -30,6 +31,10 @@ export class AppComponent implements OnInit {
         this.userInfo$ = this.dataService.getUserInfoObservable().pipe(share());
       }
     });
+  }
+
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
   }
 
   public reloadUserData(): void {
