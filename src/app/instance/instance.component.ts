@@ -34,12 +34,11 @@ export class InstanceComponent implements OnChanges {
   public attachDatasetDescription(entry: object) {
     entry['children']?.forEach((d: object) => this.attachDatasetDescription(d));
     this.dataService.getDatasetDescription(this.instancePath, entry['dataset']).pipe(take(1)).subscribe(res => {
-      if (res['description'] === null) {
-        return;
+      if (res['description']) {
+        entry['description'] = res['description'].substring(res['description'].indexOf('\n\n') + 1);
       }
-      entry['description'] = res['description'].substring(res['description'].indexOf('\n\n') + 1);
-      this.studiesLoaded++;
 
+      this.studiesLoaded++;
       if (this.studiesLoaded === this.allStudies.size) {
         this.loadingFinished = true;
       }
