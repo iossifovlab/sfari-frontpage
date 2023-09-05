@@ -1,8 +1,10 @@
+/* eslint @typescript-eslint/naming-convention: 0 */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject, take, tap, catchError, of } from 'rxjs';
-import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Observable, Subject, take, tap, catchError } from 'rxjs';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import pkceChallenge from 'pkce-challenge';
 
 @Injectable({
@@ -11,21 +13,20 @@ import pkceChallenge from 'pkce-challenge';
 export class AuthService {
   private readonly headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   private readonly options = { headers: this.headers };
-  private _accessToken = '';
-  private _refreshToken = '';
-
   public tokenExchangeSubject = new Subject<boolean>();
 
   public constructor(
     private http: HttpClient,
     private router: Router,
-  ) {
-    this._accessToken = localStorage.getItem('access_token') || '';
-    this._refreshToken = localStorage.getItem('refresh_token') || '';
+    private cookieService: CookieService,
+  ) { }
+
+  public get accessToken(): string {
+    return this.cookieService.get('access_token') || '';
   }
 
-  public getAccessToken(): string {
-    return this._accessToken;
+  public get refreshAccessToken(): string {
+    return localStorage.getItem('refresh_token') || '';
   }
 
   public generatePKCE(): string {
@@ -53,47 +54,46 @@ export class AuthService {
   }
 
   public revokeAccessToken(): Observable<object> {
-    return this.http.post(environment.authPath + '/o/revoke_token/', {
+    return this.http.post(environment.authPath + 'o/revoke_token/', {
       client_id: environment.oauthClientId,
-      token: this._accessToken,
-    }, this.options).pipe(take(1), tap(this.clearTokens));
+      token: this.accessToken,
+    }, this.options).pipe(take(1), tap({next: () => { this.clearTokens(); }}));
   }
 
   public clearTokens(): void {
-    this._accessToken = '';
-    this._refreshToken = '';
-    localStorage.removeItem('access_token');
+    this.cookieService.delete('access_token');
     localStorage.removeItem('refresh_token');
   }
 
-  public refreshToken(): Observable<object> {
-    if (this._refreshToken !== '') {
-      return this.http.post(environment.authPath + '/o/token/', {
+  public refreshToken() {
+    if (this.refreshAccessToken !== '') {
+      return this.http.post(environment.authPath + 'o/token/', {
         grant_type: 'refresh_token',
         client_id: environment.oauthClientId,
-        refresh_token: this._refreshToken,
+        refresh_token: this.refreshAccessToken,
       }, this.options).pipe(
         take(1),
         tap(res => {
           this.setTokens(res);
         }),
         catchError((err, caught) => {
-          if (err.status === 400 && err.error.error === 'invalid_grant') {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          if (err.status === 500 || (err.status === 400 && err.error.error === 'invalid_grant')) {
             this.clearTokens();
-            window.location.reload()
+            window.location.reload();
           }
           return caught;
         })
       );
     } else {
-      return of(null);
+      this.clearTokens();
+      window.location.reload();
+      return null;
     }
   }
 
   private setTokens(res: object): void {
-    this._accessToken = res['access_token'];
-    this._refreshToken = res['refresh_token'];
-    localStorage.setItem('access_token', this._accessToken);
-    localStorage.setItem('refresh_token', this._refreshToken);
+    this.cookieService.set('access_token', res['access_token'] as string);
+    localStorage.setItem('refresh_token', res['refresh_token'] as string);
   }
 }
