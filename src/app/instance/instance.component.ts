@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input } from '@angular/core';
-import { take } from 'rxjs';
+import { take, combineLatest } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 import { environment } from 'src/environments/environment';
 
@@ -16,6 +16,7 @@ export class InstanceComponent implements OnChanges {
   public content: object = null;
 
   public allStudies = new Set();
+  public visibleDatasets: string[];
   public studiesLoaded = 0;
   public loadingFinished = false;
 
@@ -25,9 +26,15 @@ export class InstanceComponent implements OnChanges {
     this.instancePath = environment.instances[this.instance].apiPath;
     this.frontendPath = environment.instances[this.instance].frontendPath;
 
-    this.dataService.getDatasetHierarchy(this.instancePath).pipe(take(1)).subscribe((data) => {
-      data['data'].forEach((d: object) => { this.attachDatasetDescription(d); this.collectAllStudies(d)});
-      this.content = data;
+    combineLatest({
+      datasets: this.dataService.getDatasetHierarchy(this.instancePath),
+      visibleDatasets: this.dataService.getVisibleDatasets(this.instancePath)
+    }).subscribe(({datasets, visibleDatasets}) => {
+      datasets['data'].forEach((d: object) => {
+        this.attachDatasetDescription(d); this.collectAllStudies(d)
+      });
+      this.content = datasets;
+      this.visibleDatasets = visibleDatasets as string[];
     });
   }
 

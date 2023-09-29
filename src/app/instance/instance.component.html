@@ -18,20 +18,22 @@
 
 <ng-template #datasets let-entries="entries" let-nesting="nesting" let-instance="instance">
   <ng-container *ngFor="let entry of entries">
-    <tr>
-      <td [ngStyle]="{'padding-left': (nesting * 60 || 8) + 'px'}">
-        <h4 [style.margin-bottom]="entry.description ? '8px' : '0'">
-          <a [attr.href]="constructLink(entry.dataset)" target="_blank">{{ entry.name }}</a>
-        </h4>
-        <markdown [data]="entry.description"></markdown>
-      </td>
-      <td class="access-td">
-        <i
-          [ngClass]="{'fa': true, 'fa-lock': !entry.access_rights, 'fa-unlock': entry.access_rights}"
-          aria-hidden="true">
-        </i>
-      </td>
-    </tr>
+    <ng-container *ngIf="visibleDatasets.includes(entry.dataset)">
+      <tr>
+        <td [ngStyle]="{'padding-left': (nesting * 60 || 8) + 'px'}">
+          <h4 [style.margin-bottom]="entry.description ? '8px' : '0'">
+            <a [attr.href]="constructLink(entry.dataset)" target="_blank">{{ entry.name }}</a>
+          </h4>
+          <markdown [data]="entry.description"></markdown>
+        </td>
+        <td class="access-td">
+          <i
+            [ngClass]="{'fa': true, 'fa-lock': !entry.access_rights, 'fa-unlock': entry.access_rights}"
+            aria-hidden="true">
+          </i>
+        </td>
+      </tr>
+    </ng-container>
     <ng-container *ngIf="entry.children">
       <ng-container
         *ngTemplateOutlet="datasets; context: { entries: entry.children, nesting: nesting + 1, instance: instance }">

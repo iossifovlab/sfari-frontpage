@@ -30,6 +30,10 @@ export class DataService {
     return this.http.get(`${apiPath}/datasets/description/${datasetId}`);
   }
 
+  public getVisibleDatasets(apiPath: string): Observable<object> {
+    return this.http.get(`${apiPath}/datasets/visible`);
+  }
+
   public logout(): Observable<object> {
     const csrfToken = this.cookieService.get('csrftoken');
     const headers = { 'X-CSRFToken': csrfToken };
