@@ -1,6 +1,7 @@
 <table *ngIf="content && loadingFinished">
   <thead>
     <tr>
+        <div><a [attr.href]="frontendPath" target="_blank">{{ frontendPathToShow }}</a> instance</div>
       <th class="big-title top-header" colspan="2">
         <span><a [attr.href]="frontendPath" target="_blank">{{ frontendPath }}</a> instance</span>
       </th>

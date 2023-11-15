@@ -13,6 +13,7 @@ export class InstanceComponent implements OnChanges {
   @Input() public instance: string;
   public instancePath: string = null;
   public frontendPath: string = null;
+  public frontendPathToShow: string = null;
   public content: object = null;
 
   public allStudies = new Set();
@@ -25,6 +26,7 @@ export class InstanceComponent implements OnChanges {
   ngOnChanges(): void {
     this.instancePath = environment.instances[this.instance].apiPath;
     this.frontendPath = environment.instances[this.instance].frontendPath;
+    this.frontendPathToShow = this.frontendPath.replace(/((http|https):\/\/)|(\/\/)/g,'');
   
     combineLatest({
       datasets: this.dataService.getDatasetHierarchy(this.instancePath),
