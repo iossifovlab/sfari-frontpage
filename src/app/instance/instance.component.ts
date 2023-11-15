@@ -25,7 +25,7 @@ export class InstanceComponent implements OnChanges {
   ngOnChanges(): void {
     this.instancePath = environment.instances[this.instance].apiPath;
     this.frontendPath = environment.instances[this.instance].frontendPath;
-
+  
     combineLatest({
       datasets: this.dataService.getDatasetHierarchy(this.instancePath),
       visibleDatasets: this.dataService.getVisibleDatasets(this.instancePath)
@@ -42,7 +42,9 @@ export class InstanceComponent implements OnChanges {
     entry['children']?.forEach((d: object) => this.attachDatasetDescription(d));
     this.dataService.getDatasetDescription(this.instancePath, entry['dataset']).pipe(take(1)).subscribe(res => {
       if (res['description']) {
-        entry['description'] = res['description'].substring(res['description'].indexOf('\n\n') + 1);
+        let regex = new RegExp(/^\n((?:\n|.)*?)\n$/, 'm');
+        let match = regex.exec(res['description']);
+        entry['description'] = match ? match[0] : res['description'].substring(res['description'].indexOf('\n'))
       }
 
       this.studiesLoaded++;
