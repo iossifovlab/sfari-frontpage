@@ -24,11 +24,16 @@ table, #documentation-link {
   font-size: 24px;
   vertical-align: middle;
   padding: 10px 8px 10px 8px;
+  background-color: #eeeeee;
 }
 
 .top-header {
-  background-color: #eeeeee;
-  height: 35px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+#agp-link {
+  float: right;
 }
 
 .fa-lock {

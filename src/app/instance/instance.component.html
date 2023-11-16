@@ -1,13 +1,13 @@
+
+  <div class="top-header" colspan="2">
+    <span><a [attr.href]="frontendPath" target="_blank">{{ frontendPathToShow }}</a> instance</span>
+    <span *ngIf="hasAgp" id="agp-link"><a [attr.href]="agpPath" target="_blank">Autism gene profiles</a></span>
+  </div>
+
 <table *ngIf="content && loadingFinished">
   <thead>
     <tr>
-        <div><a [attr.href]="frontendPath" target="_blank">{{ frontendPathToShow }}</a> instance</div>
-      <th class="big-title top-header" colspan="2">
-        <span><a [attr.href]="frontendPath" target="_blank">{{ frontendPath }}</a> instance</span>
-      </th>
-    </tr>
-    <tr>
-      <th scope="col" class="big-title" style="font-size: 16px; font-weight: bold">Dataset</th>
+      <th scope="col" class="big-title">Dataset</th>
       <th scope="col" class="big-title" style="font-size: 16px; font-weight: bold">Access</th>
     </tr>
   </thead>

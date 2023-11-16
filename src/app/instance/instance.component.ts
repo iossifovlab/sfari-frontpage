@@ -14,6 +14,8 @@ export class InstanceComponent implements OnChanges {
   public instancePath: string = null;
   public frontendPath: string = null;
   public frontendPathToShow: string = null;
+  public hasAgp: boolean;
+  public agpPath: string = null;
   public content: object = null;
 
   public allStudies = new Set();
@@ -27,6 +29,9 @@ export class InstanceComponent implements OnChanges {
     this.instancePath = environment.instances[this.instance].apiPath;
     this.frontendPath = environment.instances[this.instance].frontendPath;
     this.frontendPathToShow = this.frontendPath.replace(/((http|https):\/\/)|(\/\/)/g,'');
+
+    this.dataService.getAgp(this.instancePath).subscribe(res => this.hasAgp = res);
+    this.agpPath = environment.instances[this.instance].frontendPath + '/autism-gene-profiles';
   
     combineLatest({
       datasets: this.dataService.getDatasetHierarchy(this.instancePath),
