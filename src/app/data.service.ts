@@ -34,6 +34,18 @@ export class DataService {
     return this.http.get(`${apiPath}/datasets/visible`);
   }
 
+  public getAgp(apiPath: string): Observable<boolean> {
+    return this.http
+      .get(`${apiPath}/autism_gene_tool/single-view/configuration`).pipe(
+        map(res => {
+          if (Object.keys(res).length === 0) {
+            return false;
+          }
+          return true;
+        })
+      );
+  }
+
   public logout(): Observable<object> {
     const csrfToken = this.cookieService.get('csrftoken');
     const headers = { 'X-CSRFToken': csrfToken };

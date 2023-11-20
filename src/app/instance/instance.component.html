@@ -1,20 +1,22 @@
-<table *ngIf="content && loadingFinished">
-  <thead>
-    <tr>
-      <th class="big-title top-header" colspan="2">
-        <span><a [attr.href]="frontendPath" target="_blank">{{ frontendPath }}</a> instance</span>
-      </th>
-    </tr>
-    <tr>
-      <th scope="col" class="big-title" style="font-size: 16px; font-weight: bold">Dataset</th>
-      <th scope="col" class="big-title" style="font-size: 16px; font-weight: bold">Access</th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngTemplateOutlet="datasets; context: { entries: content['data'], nesting: 0, instance: instance}">
-    </ng-container>
-  </tbody>
-</table>
+<div *ngIf="content && loadingFinished">
+  <div class="top-header" colspan="2">
+    <span><a [attr.href]="frontendPath" target="_blank">{{ frontendPathToShow }}</a> instance</span>
+    <span *ngIf="hasAgp" id="agp-link"><a [attr.href]="agpPath" target="_blank">Autism gene profiles</a></span>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th scope="col" class="big-title">Dataset</th>
+        <th scope="col" class="big-title" style="font-size: 16px; font-weight: bold">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngTemplateOutlet="datasets; context: { entries: content['data'], nesting: 0, instance: instance}">
+      </ng-container>
+    </tbody>
+  </table>
+</div>
 
 <ng-template #datasets let-entries="entries" let-nesting="nesting" let-instance="instance">
   <ng-container *ngFor="let entry of entries">
@@ -22,7 +24,7 @@
       <tr>
         <td [ngStyle]="{'padding-left': (nesting * 60 || 8) + 'px'}">
           <h4 [style.margin-bottom]="entry.description ? '8px' : '0'">
-            <a [attr.href]="constructLink(entry.dataset)" target="_blank">{{ entry.name }}</a>
+            <a [attr.href]="constructLink(entry.dataset)" [style.font-size]="nesting ? 24 - 2 * nesting + 'px' : '24px'" target="_blank">{{ entry.name }}</a>
           </h4>
           <markdown [data]="entry.description"></markdown>
         </td>
