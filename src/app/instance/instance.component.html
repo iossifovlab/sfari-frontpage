@@ -26,7 +26,7 @@
           <h4 [style.margin-bottom]="entry.description ? '8px' : '0'">
             <a [attr.href]="constructLink(entry.dataset)" [style.font-size]="nesting ? 24 - 2 * nesting + 'px' : '24px'" target="_blank">{{ entry.name }}</a>
           </h4>
-          <markdown [data]="entry.description"></markdown>
+          <span> {{entry.description}}</span>
         </td>
         <td class="access-td">
           <i
