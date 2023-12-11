@@ -23,10 +23,10 @@
     <ng-container *ngIf="visibleDatasets.includes(entry.dataset)">
       <tr>
         <td [ngStyle]="{'padding-left': (nesting * 60 || 8) + 'px'}">
-          <h4 [style.margin-bottom]="entry.description ? '8px' : '0'">
+          <h4>
             <a [attr.href]="constructLink(entry.dataset)" [style.font-size]="nesting ? 24 - 2 * nesting + 'px' : '24px'" target="_blank">{{ entry.name }}</a>
           </h4>
-          <span> {{entry.description}}</span>
+          <markdown>{{ entry.description }}</markdown>
         </td>
         <td class="access-td">
           <i
