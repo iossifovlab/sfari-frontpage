@@ -8,7 +8,11 @@ table, th, td {
 
 h4 {
   display: inline;
-  margin-right: 3px;
+  margin-right: 5px;
+}
+
+:host::ng-deep p {
+  display: inline;
 }
 
 table {
