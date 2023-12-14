@@ -49,7 +49,12 @@ export class InstanceComponent implements OnChanges {
     entry['children']?.forEach((d: object) => this.attachDatasetDescription(d));
     this.dataService.getDatasetDescription(this.instancePath, entry['dataset']).pipe(take(1)).subscribe(res => {
       if (res['description']) {
-        let regex = new RegExp(/^\n((?:\n|.)*?)\n$/, 'm');
+        let regexTitle = new RegExp(/^##((?:\n|.)*?)$/, 'm');
+        let titleMatch = regexTitle.exec(res['description']);
+        let regex = new RegExp(/^((?:\n|.)*?)\n$/, 'm');
+        if (titleMatch) {
+          regex = new RegExp(/^\n((?:\n|.)*?)\n$/, 'm');
+        }
         let match = regex.exec(res['description']);
         entry['description'] = match ? match[0] : res['description'].substring(res['description'].indexOf('\n'))
       }
