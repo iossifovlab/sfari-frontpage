@@ -1,7 +1,7 @@
 import { Component, OnChanges, Input } from '@angular/core';
 import { take, combineLatest } from 'rxjs';
-import { DataService } from 'src/app/data.service';
-import { environment } from 'src/environments/environment';
+import { DataService } from '../data.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-instance',
