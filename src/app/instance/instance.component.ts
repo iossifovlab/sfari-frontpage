@@ -60,27 +60,13 @@ export class InstanceComponent implements OnChanges {
   }
 
   public getFirstParagraph(description: string): string {
-    // let regexTitle = new RegExp(/^##((?:\n|.)*?)$\n/, 'm');
-    // let titleMatch = regexTitle.exec(description);
-    // let regex = new RegExp(/^((?:\n|.)*?)\n$/, 'm');
-    // if (titleMatch) {
-    //   regex = new RegExp(/^\n((?:\n|.)*?)\n$/, 'm');
-    // }
-    // let match = regex.exec(description);
-    // return match ? match[0] : description.substring(description.indexOf('\n'));
 
     let splitDescription = description.split('\n\n');
     
-    // console.log(splitDescription);
     if (splitDescription[0].includes('#')) {
       let regexTitle = new RegExp(/^##((?:\n|.)*?)$\n/, 'm');
       let titleMatch = regexTitle.exec(splitDescription[0]);
-      if (titleMatch) {
-      // console.log('title: ', splitDescription[0]);
-      // console.log('replaced: ', splitDescription[0].replace(/^##((?:\n|.)*?)$\n/m, ''));
-        return splitDescription[0].replace(/^##((?:\n|.)*?)$\n/m, '');
-      }
-      return splitDescription[1];
+      return titleMatch ? splitDescription[0].replace(/^##((?:\n|.)*?)$\n/m, '') : splitDescription[1];
     }
     return splitDescription[0];
   }
