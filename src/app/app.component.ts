@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable, take, share } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { DataService } from 'src/app/data.service';
-import { AuthService } from 'src/app/auth.service';
+import { environment } from '../environments/environment';
+import { DataService } from './data.service';
+import { AuthService } from './auth.service';
 import { InstanceComponent } from './instance/instance.component';
 
 @Component({

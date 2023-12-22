@@ -1,7 +1,7 @@
 import { Component, OnChanges, Input } from '@angular/core';
 import { take, combineLatest } from 'rxjs';
-import { DataService } from 'src/app/data.service';
-import { environment } from 'src/environments/environment';
+import { DataService } from '../data.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-instance',
@@ -49,14 +49,7 @@ export class InstanceComponent implements OnChanges {
     entry['children']?.forEach((d: object) => this.attachDatasetDescription(d));
     this.dataService.getDatasetDescription(this.instancePath, entry['dataset']).pipe(take(1)).subscribe(res => {
       if (res['description']) {
-        let regexTitle = new RegExp(/^##((?:\n|.)*?)$/, 'm');
-        let titleMatch = regexTitle.exec(res['description']);
-        let regex = new RegExp(/^((?:\n|.)*?)\n$/, 'm');
-        if (titleMatch) {
-          regex = new RegExp(/^\n((?:\n|.)*?)\n$/, 'm');
-        }
-        let match = regex.exec(res['description']);
-        entry['description'] = match ? match[0] : res['description'].substring(res['description'].indexOf('\n'))
+        entry['description'] = this.getFirstParagraph(res['description']);
       }
 
       this.studiesLoaded++;
@@ -64,6 +57,18 @@ export class InstanceComponent implements OnChanges {
         this.loadingFinished = true;
       }
     });
+  }
+
+  public getFirstParagraph(description: string): string {
+
+    let splitDescription = description.split('\n\n');
+    
+    if (splitDescription[0].includes('#')) {
+      let regexTitle = new RegExp(/^##((?:\n|.)*?)$\n/, 'm');
+      let titleMatch = regexTitle.exec(splitDescription[0]);
+      return titleMatch ? splitDescription[0].replace(/^##((?:\n|.)*?)$\n/m, '') : splitDescription[1];
+    }
+    return splitDescription[0];
   }
 
   public collectAllStudies(data: object): void {

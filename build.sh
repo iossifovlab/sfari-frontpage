@@ -51,6 +51,11 @@ function main() {
     build_run npm install
   }
 
+  build_stage "Tests"
+  {
+    build_run bash -c 'npm run-script test:ci || false'
+  }
+
   build_stage "Compile production"
   {
     build_run rm -rf dist/

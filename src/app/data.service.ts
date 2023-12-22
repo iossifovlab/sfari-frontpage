@@ -4,8 +4,8 @@ import { LocationStrategy } from '@angular/common';
 import { Observable, ReplaySubject, map, tap, take, switchMap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
-import { environment } from 'src/environments/environment';
-import { AuthService } from 'src/app/auth.service';
+import { environment } from '../environments/environment';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
