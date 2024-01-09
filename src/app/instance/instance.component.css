@@ -56,3 +56,11 @@ table, #documentation-link {
   text-align: center;
   padding-bottom: 1px;
 }
+
+.collapse-dataset-icon {
+  position: absolute;
+  left: 25px;
+  top: 8px;
+  padding: 3px;
+  user-select: none;
+}

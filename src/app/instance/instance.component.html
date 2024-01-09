@@ -22,7 +22,12 @@
   <ng-container *ngFor="let entry of entries">
     <ng-container *ngIf="visibleDatasets.includes(entry.dataset)">
       <tr>
-        <td [ngStyle]="{'padding-left': (nesting * 60 || 8) + 'px'}">
+        <td style="position: relative" [ngStyle]="{'padding-left': (nesting * 60 || 8) + 'px'}">
+          <span
+            *ngIf="nesting === 1 && entry.children"
+            class="collapse-dataset-icon material-icons material-symbols-outlined"
+            (click)="toggleDatasetCollapse(entry)">expand_more</span
+          >
           <h4>
             <a [attr.href]="constructLink(entry.dataset)" [style.font-size]="nesting ? 24 - 2 * nesting + 'px' : '24px'" target="_blank">{{ entry.name }}</a>
           </h4>

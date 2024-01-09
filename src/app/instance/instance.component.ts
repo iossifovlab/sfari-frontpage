@@ -83,4 +83,13 @@ export class InstanceComponent implements OnChanges {
   public constructLink(datasetId: string) {
     return `${this.frontendPath}/datasets/${datasetId}`
   }
+
+  public toggleDatasetCollapse(dataset): void {
+    const children = dataset.children.map(d => d.dataset);
+    if (this.visibleDatasets.includes(children[0])) {
+      this.visibleDatasets = this.visibleDatasets.filter(a => !new Set(children).has(a));
+    } else {
+      this.visibleDatasets.push(...children)
+    }
+  }
 }
