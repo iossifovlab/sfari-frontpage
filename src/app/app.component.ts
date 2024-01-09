@@ -1,20 +1,21 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChildren, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable, take, share } from 'rxjs';
 import { environment } from '../environments/environment';
 import { DataService } from './data.service';
 import { AuthService } from './auth.service';
-import { InstanceComponent } from './instance/instance.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
   public instances: string[] = Object.keys(environment.instances);
   public userInfo$: Observable<any>;
-  @ViewChild(InstanceComponent) instanceComponent: InstanceComponent;
+
+  @ViewChildren('instanceComponent') instanceComponents;
+  public finishedLoading = false;
 
   constructor(
     private dataService: DataService,
@@ -30,6 +31,12 @@ export class AppComponent implements OnInit {
         this.reloadUserData();
         this.userInfo$ = this.dataService.getUserInfoObservable().pipe(share());
       }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.waitForInstancesToLoad().then(() => {
+      this.finishedLoading = true;
     });
   }
 
@@ -52,5 +59,25 @@ export class AppComponent implements OnInit {
 
   public logout(): void {
     this.dataService.logout().subscribe(() => this.reloadUserData());
+  }
+
+  private async waitForInstancesToLoad(): Promise<void> {
+    return new Promise<void>(resolve => {
+      const timer = setInterval(() => {
+        let allInstancesHaveLoaded = true;
+        console.log('1')
+        for (let i = 0; i < this.instances.length; i++) {
+          if (!this.instanceComponents.toArray()[i].loadingFinished) {
+            allInstancesHaveLoaded = false
+          }
+        }
+
+        if (allInstancesHaveLoaded) {
+          resolve();
+          clearInterval(timer);
+        }
+      }, 50);
+      
+    });
   }
 }

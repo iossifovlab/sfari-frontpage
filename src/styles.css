@@ -1,3 +1,7 @@
+body {
+  overflow-y: scroll;
+}
+
 markdown h1,
 markdown h2,
 markdown h3,

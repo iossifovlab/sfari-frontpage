@@ -15,11 +15,13 @@
   </div>
 
   <div *ngIf="(userInfo$ | async)" id="tables">
-    <ng-container *ngFor="let instance of instances">
-      <app-instance [instance]="instance"></app-instance>
-    </ng-container>
-    <div id="documentation-link" *ngIf="instanceComponent?.loadingFinished">
-      <a href="https://www.iossifovlab.com/gpfuserdocs/" target="_blank">User documentation</a>
+    <div [hidden]="!finishedLoading">
+      <ng-container *ngFor="let instance of instances">
+        <app-instance #instanceComponent [instance]="instance"></app-instance>
+      </ng-container>
+      <div id="documentation-link">
+        <a href="https://www.iossifovlab.com/gpfuserdocs/" target="_blank">User documentation</a>
+      </div>
     </div>
   </div>
 </div>
