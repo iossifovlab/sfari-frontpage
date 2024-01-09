@@ -65,13 +65,11 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
     return new Promise<void>(resolve => {
       const timer = setInterval(() => {
         let allInstancesHaveLoaded = true;
-        console.log('1')
         for (let i = 0; i < this.instances.length; i++) {
           if (!this.instanceComponents.toArray()[i].loadingFinished) {
             allInstancesHaveLoaded = false
           }
         }
-
         if (allInstancesHaveLoaded) {
           resolve();
           clearInterval(timer);
