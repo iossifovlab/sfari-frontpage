@@ -12,22 +12,25 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngTemplateOutlet="datasets; context: { entries: content['data'], nesting: 0, instance: instance}">
+      <ng-container *ngTemplateOutlet="datasetsTemplate; context: { entries: content['data'], nesting: 0, instance: instance}">
       </ng-container>
     </tbody>
   </table>
 </div>
 
-<ng-template #datasets let-entries="entries" let-nesting="nesting" let-instance="instance">
+<ng-template #datasetsTemplate let-entries="entries" let-nesting="nesting" let-instance="instance">
   <ng-container *ngFor="let entry of entries">
-    <ng-container *ngIf="visibleDatasets.includes(entry.dataset)">
+    <ng-container *ngIf="datasets.includes(entry.dataset)">
       <tr>
-        <td style="position: relative" [ngStyle]="{'padding-left': (nesting * 60 || 8) + 'px'}">
-          <span
-            *ngIf="nesting === 1 && entry.children"
-            class="collapse-dataset-icon material-icons material-symbols-outlined"
-            (click)="toggleDatasetCollapse(entry)">expand_more</span
-          >
+        <td [ngStyle]="{'padding-left': (nesting * 80 || 36) + 'px'}" style="position: relative">
+          <div style="position: absolute; display: inline-block; top: 50%;">
+            <span
+              #collapseIcon
+              *ngIf="entry.children && datasetHasVisibleChildren(entry.children)"
+              class="collapse-dataset-icon material-icons material-symbols-outlined"
+              (click)="toggleDatasetCollapse(entry); collapseIcon.classList.toggle('rotate')">expand_more</span
+            >
+          </div>
           <h4>
             <a [attr.href]="constructLink(entry.dataset)" [style.font-size]="nesting ? 24 - 2 * nesting + 'px' : '24px'" target="_blank">{{ entry.name }}</a>
           </h4>
@@ -43,7 +46,7 @@
     </ng-container>
     <ng-container *ngIf="entry.children">
       <ng-container
-        *ngTemplateOutlet="datasets; context: { entries: entry.children, nesting: nesting + 1, instance: instance }">
+        *ngTemplateOutlet="datasetsTemplate; context: { entries: entry.children, nesting: nesting + 1, instance: instance }">
       </ng-container>
     </ng-container>
   </ng-container>

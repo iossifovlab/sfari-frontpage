@@ -20,6 +20,7 @@ export class InstanceComponent implements OnChanges {
 
   public allStudies = new Set();
   public visibleDatasets: string[];
+  public datasets: string[];
   public studiesLoaded = 0;
   public loadingFinished = false;
 
@@ -42,6 +43,7 @@ export class InstanceComponent implements OnChanges {
       });
       this.content = datasets;
       this.visibleDatasets = visibleDatasets as string[];
+      this.datasets = visibleDatasets as string[];
     });
   }
 
@@ -85,11 +87,39 @@ export class InstanceComponent implements OnChanges {
   }
 
   public toggleDatasetCollapse(dataset): void {
-    const children = dataset.children.map(d => d.dataset);
-    if (this.visibleDatasets.includes(children[0])) {
-      this.visibleDatasets = this.visibleDatasets.filter(a => !new Set(children).has(a));
-    } else {
-      this.visibleDatasets.push(...children)
+    if (!this.visibleDatasets.includes(dataset.dataset)) {
+      return;
     }
+    const children = this.findAllByKey(dataset.children, 'dataset')
+    if (this.datasets.includes(dataset.children.map(d => d.dataset)[0])) {
+      this.datasets = this.datasets.filter(a => !new Set(children).has(a));
+    } else {
+      this.datasets.push(...children);
+    }
+  }
+
+  public datasetHasVisibleChildren(children: string[]): boolean {
+    let result = false;
+
+    if (!children) {
+      return result;
+    }
+
+    children.forEach(c => {
+      if (this.visibleDatasets.includes(c['dataset'])) {
+        result = true;
+      }
+    });
+    return result;
+  }
+
+  public findAllByKey(obj, keyToFind): string[] {
+    return Object.entries(obj)
+      .reduce((acc, [key, value]) => (key === keyToFind)
+        ? acc.concat(value)
+        : (typeof value === 'object' && value)
+        ? acc.concat(this.findAllByKey(value, keyToFind))
+        : acc
+      , [])
   }
 }

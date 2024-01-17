@@ -66,7 +66,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
       const timer = setInterval(() => {
         let allInstancesHaveLoaded = true;
         for (let i = 0; i < this.instances.length; i++) {
-          if (!this.instanceComponents.toArray()[i].loadingFinished) {
+          if (!this.instanceComponents.toArray()[i]?.loadingFinished) {
             allInstancesHaveLoaded = false
           }
         }

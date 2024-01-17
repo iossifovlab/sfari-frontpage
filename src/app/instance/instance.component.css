@@ -59,8 +59,12 @@ table, #documentation-link {
 
 .collapse-dataset-icon {
   position: absolute;
-  left: 25px;
-  top: 8px;
+  right: 3px;
   padding: 3px;
   user-select: none;
+  transform: translateY(-50%);
+}
+
+.rotate {
+  transform: translateY(-50%) rotate(270deg);
 }
