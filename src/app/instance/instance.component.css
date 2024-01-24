@@ -21,6 +21,7 @@ table {
 
 table, #documentation-link {
   max-width: 1200px;
+  min-width: 100%;
 }
 
 .big-title {
@@ -62,9 +63,9 @@ table, #documentation-link {
   right: 3px;
   padding: 3px;
   user-select: none;
-  transform: translateY(-50%);
+  transform: translateY(-50%) rotate(270deg);
 }
 
 .rotate {
-  transform: translateY(-50%) rotate(270deg);
+  transform: translateY(-50%);
 }

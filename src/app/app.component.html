@@ -15,7 +15,7 @@
   </div>
 
   <div *ngIf="(userInfo$ | async)" id="tables">
-    <div [hidden]="!finishedLoading">
+    <div [hidden]="!finishedLoading" style="max-width: 1200px; width: 60%;">
       <ng-container *ngFor="let instance of instances">
         <app-instance #instanceComponent [instance]="instance"></app-instance>
       </ng-container>

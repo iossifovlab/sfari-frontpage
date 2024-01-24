@@ -9,7 +9,6 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./instance.component.css']
 })
 export class InstanceComponent implements OnChanges {
-
   @Input() public instance: string;
   public instancePath: string = null;
   public frontendPath: string = null;
@@ -43,7 +42,10 @@ export class InstanceComponent implements OnChanges {
       });
       this.content = datasets;
       this.visibleDatasets = visibleDatasets as string[];
-      this.datasets = visibleDatasets as string[];
+
+      // show first two levels by default
+      this.datasets = this.content['data'][0].children.map(c => c.dataset);
+      this.datasets.push(this.content['data'][0].dataset);
     });
   }
 
@@ -90,9 +92,10 @@ export class InstanceComponent implements OnChanges {
     if (!this.visibleDatasets.includes(dataset.dataset)) {
       return;
     }
-    const children = this.findAllByKey(dataset.children, 'dataset')
+
+    const children = dataset.children.map(c => c.dataset);
     if (this.datasets.includes(dataset.children.map(d => d.dataset)[0])) {
-      this.datasets = this.datasets.filter(a => !new Set(children).has(a));
+      this.datasets = this.datasets.filter(a => !new Set(this.findAllByKey(dataset.children, 'dataset')).has(a));
     } else {
       this.datasets.push(...children);
     }

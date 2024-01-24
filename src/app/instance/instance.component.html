@@ -8,7 +8,7 @@
     <thead>
       <tr>
         <th scope="col" class="big-title">Dataset</th>
-        <th scope="col" class="big-title" style="font-size: 16px; font-weight: bold; min-width: 79px; text-align: center">Access</th>
+        <th scope="col" class="big-title" style="font-size: 16px; font-weight: bold; width: 79px; text-align: center">Access</th>
       </tr>
     </thead>
     <tbody>
@@ -28,6 +28,7 @@
               #collapseIcon
               *ngIf="entry.children && datasetHasVisibleChildren(entry.children)"
               class="collapse-dataset-icon material-icons material-symbols-outlined"
+              [ngClass]="{'rotate': nesting === 0}"
               (click)="toggleDatasetCollapse(entry); collapseIcon.classList.toggle('rotate')">expand_more</span
             >
           </div>
