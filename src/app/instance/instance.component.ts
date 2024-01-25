@@ -19,7 +19,7 @@ export class InstanceComponent implements OnChanges {
 
   public allStudies = new Set();
   public visibleDatasets: string[];
-  public datasets: string[];
+  public datasets: string[] = [];
   public studiesLoaded = 0;
   public loadingFinished = false;
 
@@ -43,9 +43,16 @@ export class InstanceComponent implements OnChanges {
       this.content = datasets;
       this.visibleDatasets = visibleDatasets as string[];
 
-      // show first two levels by default
-      this.datasets = this.content['data'][0].children.map(c => c.dataset);
-      this.datasets.push(this.content['data'][0].dataset);
+      this.content['data'].forEach(d => {
+        this.datasets.push(d.dataset);
+        if (d.children) {
+          d.children.map(c => c.dataset).forEach(c => {
+            if (this.visibleDatasets.includes(c)) {
+              this.datasets.push(c);
+            }
+          })
+        }
+      });
     });
   }
 
@@ -97,7 +104,11 @@ export class InstanceComponent implements OnChanges {
     if (this.datasets.includes(dataset.children.map(d => d.dataset)[0])) {
       this.datasets = this.datasets.filter(a => !new Set(this.findAllByKey(dataset.children, 'dataset')).has(a));
     } else {
-      this.datasets.push(...children);
+      children.forEach(c => {
+        if (this.visibleDatasets.includes(c)) {
+          this.datasets.push(c);
+        }
+      });
     }
   }
 
