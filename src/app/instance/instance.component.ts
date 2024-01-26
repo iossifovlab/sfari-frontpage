@@ -44,7 +44,10 @@ export class InstanceComponent implements OnChanges {
       this.visibleDatasets = visibleDatasets as string[];
 
       this.content['data'].forEach(d => {
-        this.datasets.push(d.dataset);
+        if (this.visibleDatasets.includes(d.dataset)) {
+          this.datasets.push(d.dataset);
+        }
+
         if (d.children) {
           d.children.map(c => c.dataset).forEach(c => {
             if (this.visibleDatasets.includes(c)) {
